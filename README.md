@@ -8,6 +8,7 @@ Self-Driving Car Engineer Nanodegree Program
 [image4]: ./docs/NIS-RADAR.png "Normalized Innovation for RADAR estimates"
 [image5]: ./docs/Velocity-Estimate-Fused.png "Velocity Estimate from Fused Sensors"
 [image6]: ./docs/UKF-Fused-Sample1.png "Fused Sensor Tracking on sample-laser-radar-measurement-data-1.txt"
+[image7]: ./docs/NIS-RADAR-Sample1.png "NIS for RADAR on Sample 1"
 
 ## Notes
 Current RMSE with RADAR data only: 
@@ -55,11 +56,21 @@ The filter performance was evaluated throughout this process to ensure good beha
 
 The resulting position estimates are show below
 
-Obj Data (Newer Dataset)
+### Obj Data (Newer Dataset)
 ![alt text][image2]
 
-Sample 1 Data (Older Dataset)
+### Sample 1 Data (Older Dataset)
 ![alt text][image6]
+
+## Conclusions
+The target RMSE is met for both the old and new datasets.
+
+Even though the RMSE meets targets for both the old and new datasets, the tracking can still be improved on Sample 1. 
+The source of the drift is in the filter setup for RADAR as can be seen for the NIS for this sensor on the Sample 1 dataset (below).
+
+![alt text][image7]
+
+Improving RADAR tracking for Sample 1 would require further tuning of the process noise.
 
 ## Dependencies
 
