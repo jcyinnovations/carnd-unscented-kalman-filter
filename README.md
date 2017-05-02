@@ -3,6 +3,11 @@ Self-Driving Car Engineer Nanodegree Program
 
 [//]: # (Image References)
 [image1]: ./docs/UKF-Radar.png "RADAR Tracking on obj_pose-laser-radar-synthetic-input.txt"
+[image2]: ./docs/Position-Estimate-Fused.png "Position Estimate from Fused Sensors"
+[image3]: ./docs/NIS-Lidar.png "Normalized Innovation for LIDAR estimates"
+[image4]: ./docs/NIS-RADAR.png "Normalized Innovation for RADAR estimates"
+[image5]: ./docs/Velocity-Estimate-Fused.png "Velocity Estimate from Fused Sensors"
+[image6]: ./docs/UKF-Fused-Sample1.png "Fused Sensor Tracking on sample-laser-radar-measurement-data-1.txt"
 
 ## Notes
 Current RMSE with RADAR data only: 
@@ -25,6 +30,36 @@ The new values are:
 Further experiementation is required to refine the process noise parameters.
 =======
 ![alt text][image1]
+
+## Update (5/2/2017)
+The filter performance was improved by reviewing the ground truth data and eliminating outliers before re-evaluating its logits. The resulting logits are:
+- std `a` (acceleration std) = 3.51
+- std `psi dot` (yaw rate std) = 0.356
+
+This resulted in lower overall RMSE as shown below:
+- [0.08, 0.09, 0.37, 0.26] - obj_pose-laser-radar-synthetic-input.txt
+- [0.12, 0.14, 0.65, 0.69] - sample-laser-radar-measurement-data-1.txt
+
+As you can see, the first sample meets the required target whereas the second, older sample does not.
+
+After tuning the `yaw rate std`, I was able to improve both error rates as follows:
+- [0.07, 0.09, 0.36, 0.25] - obj_pose-laser-radar-synthetic-input.txt
+- [0.08, 0.09, 0.59, 0.61] - sample-laser-radar-measurement-data-1.txt
+
+The yaw rate STD value was increased to 0.55 to effect this result.
+
+The filter performance was evaluated throughout this process to ensure good behaviour, using NIS. The final NIS plots are shown below:
+
+![alt text][image3]
+![alt text][image4]
+
+The resulting position estimates are show below
+
+Obj Data (Newer Dataset)
+![alt text][image2]
+
+Sample 1 Data (Older Dataset)
+![alt text][image6]
 
 ## Dependencies
 

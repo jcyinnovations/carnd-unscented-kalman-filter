@@ -22,7 +22,7 @@ UKF::UKF() {
 	std_a_ = 3.51; // Derived by analyzing ground truth data
 
 	// Process noise standard deviation yaw acceleration in rad/s^2
-	std_yawdd_ = 7.92; // Derived by analyzing ground truth data
+	std_yawdd_ = 0.55; //0.356; // Derived by analyzing ground truth data
 
 	// Laser measurement noise standard deviation position1 in m
 	std_laspx_ = 0.15;
@@ -94,12 +94,6 @@ UKF::~UKF() {
  * either radar or laser.
  */
 void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
-	/**
-	 TODO:
-
-	 Complete this function! Make sure you switch between lidar and radar
-	 measurements.
-	 */
 	if (!is_initialized_) {
 		// first measurement
 		time_us_ = meas_package.timestamp_;
@@ -116,16 +110,13 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
 					* cos((double) meas_package.raw_measurements_(1));
 			x_(1) = meas_package.raw_measurements_(0)
 					* sin((double) meas_package.raw_measurements_(1));
-			//x_(2) = meas_package.raw_measurements_(2);
 			x_(3) = meas_package.raw_measurements_(1);
-			//Rough estimate of vx, vy using components of rho_dot
 		} else if (meas_package.sensor_type_ == MeasurementPackage::LASER) {
 			/**
 			 * Initialize state.
 			 */
 			x_(0) = meas_package.raw_measurements_(0);
 			x_(1) = meas_package.raw_measurements_(1);
-			//x_(3) = atan2((double) meas_package.raw_measurements_(1),(double) meas_package.raw_measurements_(0));
 		}
 
 		// done initializing, no need to predict or update

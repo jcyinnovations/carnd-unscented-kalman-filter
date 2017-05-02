@@ -71,8 +71,7 @@ int main(int argc, char* argv[]) {
 
 	string line;
 
-	// prep the measurement packages (each line represents a measurement at a
-	// timestamp)
+	// prep the measurement packages (each line represents a measurement at a timestamp)
 	while (getline(in_file_, line)) {
 		string sensor_type;
 		MeasurementPackage meas_package;
@@ -84,8 +83,6 @@ int main(int argc, char* argv[]) {
 		iss >> sensor_type;
 
 		if (sensor_type.compare("L") == 0) {
-			// laser measurement
-
 			// read measurements at this timestamp
 			meas_package.sensor_type_ = MeasurementPackage::LASER;
 			meas_package.raw_measurements_ = VectorXd(2);
@@ -98,8 +95,6 @@ int main(int argc, char* argv[]) {
 			meas_package.timestamp_ = timestamp;
 			measurement_pack_list.push_back(meas_package);
 		} else if (sensor_type.compare("R") == 0) {
-			// radar measurement
-
 			// read measurements at this timestamp
 			meas_package.sensor_type_ = MeasurementPackage::RADAR;
 			meas_package.raw_measurements_ = VectorXd(3);
@@ -114,7 +109,6 @@ int main(int argc, char* argv[]) {
 			meas_package.timestamp_ = timestamp;
 			measurement_pack_list.push_back(meas_package);
 		}
-
 		// read ground truth data to compare later
 		float x_gt;
 		float y_gt;
@@ -212,7 +206,6 @@ int main(int argc, char* argv[]) {
 		float vy_estimate_ = ukf.x_(2) * sin((double)ukf.x_(3));
 
 		ukf_x_cartesian_ << x_estimate_, y_estimate_, vx_estimate_, vy_estimate_;
-
 		estimations.push_back(ukf_x_cartesian_);
 		ground_truth.push_back(gt_pack_list[k].gt_values_);
 	}
