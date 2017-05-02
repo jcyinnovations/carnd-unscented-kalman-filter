@@ -18,7 +18,7 @@ public:
 	bool is_initialized_;
 
 	///* if this is false, laser measurements will be ignored (except for init)
-	bool use_laser_;
+	bool use_lidar_;
 
 	///* if this is false, radar measurements will be ignored (except for init)
 	bool use_radar_;
@@ -84,7 +84,7 @@ public:
 	double NIS_radar_;
 
 	///* the current NIS for laser
-	double NIS_laser_;
+	double NIS_lidar_;
 
 	Tools tools_;
 
@@ -166,9 +166,19 @@ private:
 	void PredictRadarMeasurement(VectorXd* z_out, MatrixXd* Zsig_out, MatrixXd* S_out);
 
 	/**
+	 * Predict the posterior state based on the current LIDAR measurement
+	 */
+	void PredictLidarMeasurement(VectorXd* z_out, MatrixXd* Zsig_out, MatrixXd* S_out);
+
+	/**
 	 * Update the state using the current prediction and measurement
 	 */
-	void UpdateState(VectorXd z, MatrixXd Zsig, VectorXd z_pred, MatrixXd S);
+	void UpdateState(MeasurementPackage::SensorType sensor, VectorXd z, MatrixXd Zsig, VectorXd z_pred, MatrixXd S);
+
+	/**
+	 * Update the state using the current prediction and measurement
+	 */
+	void UpdateStateLidar(VectorXd z, MatrixXd Zsig, VectorXd z_pred, MatrixXd S);
 
 };
 
